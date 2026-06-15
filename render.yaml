@@ -1,0 +1,42 @@
+services:
+  # Backend - Java Spring Boot API
+  - type: web
+    name: agenda-backend-joao
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    plan: free
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: agenda-db-joao
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: agenda-db-joao
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: agenda-db-joao
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: agenda-db-joao
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: agenda-db-joao
+          property: password
+
+  # Frontend - React Application
+  - type: web
+    name: agenda-frontend-joao
+    env: docker
+    dockerfilePath: frontend/Dockerfile
+    plan: free
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://agenda-backend-joao.onrender.com/api # Após criar, substitua pela URL gerada pelo Render para o seu backend.
+
+databases:
+  - name: agenda-db-joao
+    plan: free
