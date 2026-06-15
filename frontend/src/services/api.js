@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://agenda-frontend-joao.onrender.com/api';
+const API_URL = 'https://agenda-backend-joao.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
