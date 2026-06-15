@@ -49,6 +49,16 @@ function AtendimentoList() {
     return dataStr;
   };
 
+  // 🛡️ TRATAMENTO SEGURO DE ARRAYS:
+  // Se o back-end retornar uma paginação (Page), extrai o .content. Se for array puro, usa direto.
+  const listaAtendimentos = Array.isArray(atendimentos) 
+    ? atendimentos 
+    : (atendimentos?.content || []);
+
+  const listaProfissionais = Array.isArray(profissionais) 
+    ? profissionais 
+    : (profissionais?.content || []);
+
   return (
     <div className="list-container">
       <div className="header-row">
@@ -68,26 +78,28 @@ function AtendimentoList() {
             onChange={(e) => setFiltroProfissional(e.target.value)}
           >
             <option value="">Todos os Profissionais</option>
-            {profissionais.map(p => (
+            {listaProfissionais.map(p => (
               <option key={p.id} value={p.id}>{p.nome} ({p.categoria})</option>
             ))}
           </select>
         </div>
       </div>
 
-      {atendimentos.length === 0 ? (
+      {listaAtendimentos.length === 0 ? (
         <p className="no-data">Nenhuma consulta agendada.</p>
       ) : (
         <div className="cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px', marginTop: '20px' }}>
-          {atendimentos.map(a => (
+          {listaAtendimentos.map(a => (
             <div key={a.id} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '20px', border: '1px solid #eef0f6', borderRadius: '12px', background: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                   <div>
-                    <h3 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', color: '#1f2333' }}>{a.profissional?.nome}</h3>
-                    <span className={`badge category-${a.profissional?.categoria.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} style={{ fontSize: '0.75rem' }}>
-                      {a.profissional?.categoria}
-                    </span>
+                    <h3 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', color: '#1f2333' }}>{a.profissional?.nome || 'Profissional não identificado'}</h3>
+                    {a.profissional?.categoria && (
+                      <span className={`badge category-${a.profissional.categoria.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} style={{ fontSize: '0.75rem' }}>
+                        {a.profissional.categoria}
+                      </span>
+                    )}
                   </div>
                   <div style={{ textAlign: 'right', fontSize: '0.85rem', color: '#6b7088', fontWeight: '600' }}>
                     <div>{formatarData(a.data)}</div>
