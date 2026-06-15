@@ -2,10 +2,9 @@ services:
   # Backend - Java Spring Boot API
   - type: web
     name: agenda-backend-joao
-    runtime: docker
-    rootDirectory: backend
+    env: docker
     dockerContext: backend
-    dockerfilePath: Dockerfile
+    dockerfilePath: backend/Dockerfile
     envVars:
       - key: DB_HOST
         fromDatabase:
@@ -31,10 +30,9 @@ services:
   # Frontend - React Application
   - type: web
     name: agenda-frontend-joao
-    runtime: docker
-    rootDirectory: frontend
+    env: docker
     dockerContext: frontend
-    dockerfilePath: Dockerfile
+    dockerfilePath: frontend/Dockerfile
     envVars:
       - key: REACT_APP_API_URL
         value: https://agenda-backend-joao.onrender.com/api
