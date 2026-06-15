@@ -57,7 +57,7 @@ npm test
 
 ## Divisão de Trabalho
 
-- **DEV 1 - João:** CRUD de Contatos (ContatoController + ContatoList/Form)
+- **DEV 1 - Ana:** CRUD de Contatos (ContatoController + ContatoList/Form)
 - **DEV 2 - Bruno:** CRUD de Compromissos (CompromissoController + CompromissoList/Form)
 
 ## Apresentação

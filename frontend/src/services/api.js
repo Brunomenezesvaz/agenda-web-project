@@ -16,5 +16,15 @@ export const profissionalService = {
   deletar: (id) => api.delete(`/profissionais/${id}`)
 };
 
+// ========== ATENDIMENTOS (Colleague) ==========
+export const atendimentoService = {
+  listar: (profissionalId) => api.get('/atendimentos', { params: { profissionalId } }),
+  buscar: (id) => api.get(`/atendimentos/${id}`),
+  criar: (atendimento) => api.post('/atendimentos', atendimento),
+  atualizar: (id, atendimento) => api.put(`/atendimentos/${id}`, atendimento),
+  deletar: (id) => api.delete(`/atendimentos/${id}`)
+};
+
 export default api;
+
 
