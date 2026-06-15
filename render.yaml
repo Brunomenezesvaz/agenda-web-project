@@ -35,7 +35,7 @@ services:
     dockerfilePath: frontend/Dockerfile
     envVars:
       - key: REACT_APP_API_URL
-        value: https://agenda-backend-joao.onrender.com/api
+        value: https://agenda-backend-joao.onrender.com
 
 databases:
   - name: agenda-db-joao
