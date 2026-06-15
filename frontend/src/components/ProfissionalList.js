@@ -32,11 +32,17 @@ function ProfissionalList() {
           setTimeout(() => setMensagem(''), 3000);
         })
         .catch(err => {
-          setErro('Erro ao remover o profissional.');
+          setErro('Erro ao remover the profissional.');
           setTimeout(() => setErro(''), 3000);
         });
     }
   };
+
+  // 🛡️ LINHA DE DEFESA CRÍTICA:
+  // Evita o crash caso o Spring Boot devolva uma paginação (objeto com .content) ou erro.
+  const listaProfissionais = Array.isArray(profissionais) 
+    ? profissionais 
+    : (profissionais?.content || []);
 
   return (
     <div className="list-container">
@@ -74,7 +80,8 @@ function ProfissionalList() {
         </div>
       </div>
 
-      {profissionais.length === 0 ? (
+      {/* 🛠️ Mudou de profissionais.length para listaProfissionais.length */}
+      {listaProfissionais.length === 0 ? (
         <p className="no-data">Nenhum profissional de saúde cadastrado ou encontrado.</p>
       ) : (
         <table className="table">
@@ -88,10 +95,15 @@ function ProfissionalList() {
             </tr>
           </thead>
           <tbody>
-            {profissionais.map(p => (
+            {/* 🛠️ Mudou de profissionais.map para listaProfissionais.map */}
+            {listaProfissionais.map(p => (
               <tr key={p.id}>
                 <td><strong>{p.nome}</strong></td>
-                <td><span className={`badge category-${p.categoria.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>{p.categoria}</span></td>
+                <td>
+                  <span className={`badge category-${p.categoria ? p.categoria.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : ''}`}>
+                    {p.categoria}
+                  </span>
+                </td>
                 <td>{p.telefone || '-'}</td>
                 <td>{p.endereco || '-'}</td>
                 <td>
